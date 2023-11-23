@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "707944149328",
+    "project_id": "autocare-87fcc",
+    "storage_bucket": "autocare-87fcc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:707944149328:android:0b87e98b8d521932507c55",
+        "android_client_info": {
+          "package_name": "com.example.findpix_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBr103szabBrPJOeCzPMOi7XIP_b5L8ULM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
