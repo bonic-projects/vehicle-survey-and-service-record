@@ -6,9 +6,11 @@
 
 // ignore_for_file: public_member_api_docs, constant_identifier_names, non_constant_identifier_names,unnecessary_this
 
+import 'package:autocare_flutter/app/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:visual_ease_flutter/app/constants/validators.dart';
+
+const bool _autoTextFieldValidation = true;
 
 const String NameValueKey = 'name';
 const String UserRoleValueKey = 'userRole';
@@ -16,8 +18,8 @@ const String EmailValueKey = 'email';
 const String PasswordValueKey = 'password';
 
 final Map<String, String> UserRoleValueToTitleMap = {
-  'blind': 'Blind',
-  'bystander': 'Bystander',
+  'user': 'User',
+  'admin': 'Admin',
 };
 
 final Map<String, TextEditingController> _RegisterViewTextEditingControllers =
@@ -38,6 +40,7 @@ mixin $RegisterView {
       _getFormTextEditingController(EmailValueKey);
   TextEditingController get passwordController =>
       _getFormTextEditingController(PasswordValueKey);
+
   FocusNode get nameFocusNode => _getFormFocusNode(NameValueKey);
   FocusNode get emailFocusNode => _getFormFocusNode(EmailValueKey);
   FocusNode get passwordFocusNode => _getFormFocusNode(PasswordValueKey);
@@ -65,10 +68,12 @@ mixin $RegisterView {
 
   /// Registers a listener on every generated controller that calls [model.setData()]
   /// with the latest textController values
-  void syncFormWithViewModel(FormViewModel model) {
+  void syncFormWithViewModel(FormStateHelper model) {
     nameController.addListener(() => _updateFormData(model));
     emailController.addListener(() => _updateFormData(model));
     passwordController.addListener(() => _updateFormData(model));
+
+    _updateFormData(model, forceValidate: _autoTextFieldValidation);
   }
 
   /// Registers a listener on every generated controller that calls [model.setData()]
@@ -81,16 +86,12 @@ mixin $RegisterView {
     nameController.addListener(() => _updateFormData(model));
     emailController.addListener(() => _updateFormData(model));
     passwordController.addListener(() => _updateFormData(model));
-  }
 
-  static const bool _autoTextFieldValidation = true;
-  bool validateFormFields(FormViewModel model) {
-    _updateFormData(model, forceValidate: true);
-    return model.isFormValid;
+    _updateFormData(model, forceValidate: _autoTextFieldValidation);
   }
 
   /// Updates the formData on the FormViewModel
-  void _updateFormData(FormViewModel model, {bool forceValidate = false}) {
+  void _updateFormData(FormStateHelper model, {bool forceValidate = false}) {
     model.setData(
       model.formValueMap
         ..addAll({
@@ -103,6 +104,11 @@ mixin $RegisterView {
     if (_autoTextFieldValidation || forceValidate) {
       updateValidationData(model);
     }
+  }
+
+  bool validateFormFields(FormViewModel model) {
+    _updateFormData(model, forceValidate: true);
+    return model.isFormValid;
   }
 
   /// Calls dispose on all the generated controllers and focus nodes
@@ -121,9 +127,18 @@ mixin $RegisterView {
   }
 }
 
-extension ValueProperties on FormViewModel {
-  bool get isFormValid =>
-      this.fieldsValidationMessages.values.every((element) => element == null);
+extension ValueProperties on FormStateHelper {
+  bool get hasAnyValidationMessage => this
+      .fieldsValidationMessages
+      .values
+      .any((validation) => validation != null);
+
+  bool get isFormValid {
+    if (!_autoTextFieldValidation) this.validateForm();
+
+    return !hasAnyValidationMessage;
+  }
+
   String? get nameValue => this.formValueMap[NameValueKey] as String?;
   String? get userRoleValue => this.formValueMap[UserRoleValueKey] as String?;
   String? get emailValue => this.formValueMap[EmailValueKey] as String?;
@@ -131,10 +146,7 @@ extension ValueProperties on FormViewModel {
 
   set nameValue(String? value) {
     this.setData(
-      this.formValueMap
-        ..addAll({
-          NameValueKey: value,
-        }),
+      this.formValueMap..addAll({NameValueKey: value}),
     );
 
     if (_RegisterViewTextEditingControllers.containsKey(NameValueKey)) {
@@ -144,10 +156,7 @@ extension ValueProperties on FormViewModel {
 
   set emailValue(String? value) {
     this.setData(
-      this.formValueMap
-        ..addAll({
-          EmailValueKey: value,
-        }),
+      this.formValueMap..addAll({EmailValueKey: value}),
     );
 
     if (_RegisterViewTextEditingControllers.containsKey(EmailValueKey)) {
@@ -157,10 +166,7 @@ extension ValueProperties on FormViewModel {
 
   set passwordValue(String? value) {
     this.setData(
-      this.formValueMap
-        ..addAll({
-          PasswordValueKey: value,
-        }),
+      this.formValueMap..addAll({PasswordValueKey: value}),
     );
 
     if (_RegisterViewTextEditingControllers.containsKey(PasswordValueKey)) {
@@ -198,9 +204,15 @@ extension ValueProperties on FormViewModel {
       this.fieldsValidationMessages[PasswordValueKey];
 }
 
-extension Methods on FormViewModel {
+extension Methods on FormStateHelper {
   void setUserRole(String userRole) {
-    this.setData(this.formValueMap..addAll({UserRoleValueKey: userRole}));
+    this.setData(
+      this.formValueMap..addAll({UserRoleValueKey: userRole}),
+    );
+
+    if (_autoTextFieldValidation) {
+      this.validateForm();
+    }
   }
 
   setNameValidationMessage(String? validationMessage) =>
@@ -242,7 +254,8 @@ String? getValidationMessage(String key) {
 }
 
 /// Updates the fieldsValidationMessages on the FormViewModel
-void updateValidationData(FormViewModel model) => model.setValidationMessages({
+void updateValidationData(FormStateHelper model) =>
+    model.setValidationMessages({
       NameValueKey: getValidationMessage(NameValueKey),
       EmailValueKey: getValidationMessage(EmailValueKey),
       PasswordValueKey: getValidationMessage(PasswordValueKey),

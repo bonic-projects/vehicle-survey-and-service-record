@@ -1,3 +1,4 @@
+import 'package:autocare_flutter/models/appuser.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_firebase_auth/stacked_firebase_auth.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -26,17 +27,24 @@ class LoginViewModel extends FormViewModel {
       log.i(emailValue!);
       log.i(passwordValue!);
       FirebaseAuthenticationResult result =
-          await _firebaseAuthenticationService!.loginWithEmail(
+          await _firebaseAuthenticationService.loginWithEmail(
         email: emailValue!,
         password: passwordValue!,
       );
       if (result.user != null) {
-        _userService.fetchUser();
-        _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
+        AppUser? user = await _userService.fetchUser();
+        if (user == null) {
+          _navigationService.pushNamedAndRemoveUntil(Routes.loginRegisterView);
+        }
+        if (user!.userRole == 'user') {
+          _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
+        } else {
+          _navigationService.pushNamedAndRemoveUntil(Routes.adminView);
+        }
       } else {
         log.i("Error: ${result.errorMessage}");
         _bottomSheetService.showCustomSheet(
-          variant: BottomSheetType.alert,
+          variant: BottomSheetType.notice,
           title: "Error",
           description: result.errorMessage ?? "Enter valid credentials",
         );

@@ -51,19 +51,23 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyAOYTH2rvASTqky1g242QjFL7XNXST5RrI',
-    appId: '1:707944149328:web:8f888de2d16d5f9a507c55',
+    appId: '1:707944149328:web:978a26085beb33db507c55',
     messagingSenderId: '707944149328',
     projectId: 'autocare-87fcc',
     authDomain: 'autocare-87fcc.firebaseapp.com',
+    databaseURL:
+        'https://autocare-87fcc-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'autocare-87fcc.appspot.com',
-    measurementId: 'G-MBJFK3EMBG',
+    measurementId: 'G-V7GKSDNW08',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBr103szabBrPJOeCzPMOi7XIP_b5L8ULM',
-    appId: '1:707944149328:android:0b87e98b8d521932507c55',
+    appId: '1:707944149328:android:456e4d711232b781507c55',
     messagingSenderId: '707944149328',
     projectId: 'autocare-87fcc',
+    databaseURL:
+        'https://autocare-87fcc-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'autocare-87fcc.appspot.com',
   );
 }

@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:findpix_flutter/app/app.bottomsheets.dart';
-import 'package:findpix_flutter/app/app.locator.dart';
-import 'package:findpix_flutter/ui/common/app_strings.dart';
-import 'package:findpix_flutter/ui/views/home/home_viewmodel.dart';
+import 'package:autocare_flutter/app/app.bottomsheets.dart';
+import 'package:autocare_flutter/app/app.locator.dart';
+import 'package:autocare_flutter/ui/common/app_strings.dart';
+import 'package:autocare_flutter/ui/views/home/home_viewmodel.dart';
 
 import '../helpers/test_helpers.dart';
 

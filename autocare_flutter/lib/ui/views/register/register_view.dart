@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
-import '../../../app/constants/validators.dart';
+import 'package:autocare_flutter/app/validators.dart';
 import '../widgets/customButton.dart';
 import 'register_viewmodel.dart';
 import 'register_view.form.dart';
@@ -15,12 +15,12 @@ import 'register_view.form.dart';
     name: 'userRole',
     items: [
       StaticDropdownItem(
-        title: 'Blind',
-        value: 'blind',
+        title: 'User',
+        value: 'user',
       ),
       StaticDropdownItem(
-        title: 'Bystander',
-        value: 'bystander',
+        title: 'Admin',
+        value: 'admin',
       ),
     ],
   ),
@@ -55,7 +55,7 @@ class RegisterView extends StackedView<RegisterViewModel> with $RegisterView {
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Image.asset(
-                  'assets/logo.png',
+                  'assets/logo.jpg',
                   height: 150,
                 ),
               ),

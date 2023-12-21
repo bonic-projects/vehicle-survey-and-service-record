@@ -1,11 +1,12 @@
 import 'package:stacked/stacked.dart';
 import 'package:stacked_firebase_auth/stacked_firebase_auth.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:visual_ease_flutter/models/appuser.dart';
+import 'package:autocare_flutter/app/validators.dart';
 import '../../../app/app.bottomsheets.dart';
 import '../../../app/app.locator.dart';
 import '../../../app/app.logger.dart';
 import '../../../app/app.router.dart';
+import '../../../models/appuser.dart';
 import '../../../services/user_service.dart';
 import 'register_view.form.dart';
 
@@ -13,7 +14,7 @@ class RegisterViewModel extends FormViewModel {
   final log = getLogger('RegisterViewModel');
   final _userService = locator<UserService>();
 
-  final FirebaseAuthenticationService? _firebaseAuthenticationService =
+  final FirebaseAuthenticationService _firebaseAuthenticationService =
       locator<FirebaseAuthenticationService>();
   final _navigationService = locator<NavigationService>();
   final BottomSheetService _bottomSheetService = locator<BottomSheetService>();
@@ -61,16 +62,19 @@ class RegisterViewModel extends FormViewModel {
           userRole: userRoleValue!,
           latitude: 0.0,
           longitude: 0.0,
-          place: "",
           regTime: DateTime.now(),
         ));
         if (error == null) {
-          _userService.fetchUser();
-          _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
+          await _userService.fetchUser();
+          if (userRoleValue! == 'user') {
+            _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
+          } else {
+            _navigationService.pushNamedAndRemoveUntil(Routes.adminView);
+          }
         } else {
           log.i("Firebase error");
           _bottomSheetService.showCustomSheet(
-            variant: BottomSheetType.alert,
+            variant: BottomSheetType.notice,
             title: "Upload Error",
             description: error,
           );
@@ -78,7 +82,7 @@ class RegisterViewModel extends FormViewModel {
       } else {
         log.i("Error: ${result.errorMessage}");
         _bottomSheetService.showCustomSheet(
-          variant: BottomSheetType.alert,
+          variant: BottomSheetType.notice,
           title: "Error",
           description: result.errorMessage ?? "Enter valid credentials",
         );

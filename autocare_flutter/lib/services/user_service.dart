@@ -1,4 +1,6 @@
+import 'package:autocare_flutter/app/app.router.dart';
 import 'package:stacked_firebase_auth/stacked_firebase_auth.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 import '../app/app.locator.dart';
 import '../app/app.logger.dart';
@@ -9,15 +11,18 @@ class UserService {
   final log = getLogger('UserService');
   final _authenticationService = locator<FirebaseAuthenticationService>();
   final _firestoreService = locator<FirestoreService>();
+  final _navigationService = locator<NavigationService>();
 
   bool get hasLoggedInUser => _authenticationService.hasUser;
 
   AppUser? _user;
+
   AppUser? get user => _user;
 
-  void logout() {
+  void logout() async {
     _user = null;
-    _authenticationService.logout();
+    await _authenticationService.logout();
+    _navigationService.navigateToLoginRegisterView();
   }
 
   Future<String?> createUpdateUser(AppUser user) async {

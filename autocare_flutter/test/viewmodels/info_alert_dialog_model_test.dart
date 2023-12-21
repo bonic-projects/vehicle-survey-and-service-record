@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:findpix_flutter/app/app.locator.dart';
+import 'package:autocare_flutter/app/app.locator.dart';
 
 import '../helpers/test_helpers.dart';
 
