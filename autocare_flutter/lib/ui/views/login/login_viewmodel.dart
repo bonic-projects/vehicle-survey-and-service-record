@@ -6,6 +6,7 @@ import '../../../app/app.bottomsheets.dart';
 import '../../../app/app.locator.dart';
 import '../../../app/app.logger.dart';
 import '../../../app/app.router.dart';
+import '../../../services/firestore_service.dart';
 import '../../../services/user_service.dart';
 import 'login_view.form.dart';
 
@@ -17,6 +18,7 @@ class LoginViewModel extends FormViewModel {
   final _navigationService = locator<NavigationService>();
   final BottomSheetService _bottomSheetService = locator<BottomSheetService>();
   final _userService = locator<UserService>();
+  final _firestoreService = locator<FirestoreService>();
 
   void onModelReady() {}
 
@@ -37,8 +39,10 @@ class LoginViewModel extends FormViewModel {
           _navigationService.pushNamedAndRemoveUntil(Routes.loginRegisterView);
         }
         if (user!.userRole == 'user') {
+          _firestoreService.listenToServicesForUser(true);
           _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
         } else {
+          _firestoreService.listenToServicesForUser(false);
           _navigationService.pushNamedAndRemoveUntil(Routes.adminView);
         }
       } else {

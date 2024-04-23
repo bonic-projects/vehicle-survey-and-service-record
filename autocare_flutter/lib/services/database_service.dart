@@ -41,7 +41,7 @@ class DatabaseService with ListenableServiceMixin {
 
   void setupNodeListening() {
     DatabaseReference starCountRef =
-        _db.ref('/devices/JRrKAx7nRIciWujByyqbeOUn45T2/reading');
+        _db.ref('/devices/CX3ObgGzKlQduIolrkEsuQFN1x43/reading');
     starCountRef.onValue.listen((DatabaseEvent event) {
       if (event.snapshot.exists) {
         try {

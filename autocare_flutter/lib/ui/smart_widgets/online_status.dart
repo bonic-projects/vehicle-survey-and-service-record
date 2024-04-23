@@ -9,7 +9,7 @@ class IsOnlineWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
-      onModelReady: (model) => model.setTimer(),
+      onViewModelReady: (model) => model.setTimer(),
       builder: (context, model, child) {
         if (model.isOnline) {
           return const Center(

@@ -16,11 +16,12 @@ class StartupViewModel extends BaseViewModel {
 
   // Place anything here that needs to happen before we get into the application
   Future runStartupLogic() async {
+    _dbService.setupNodeListening();
+
     if (_userService.hasLoggedInUser) {
       AppUser? user = await _userService.fetchUser();
       if (user != null && user.userRole == "user") {
         _firestoreService.listenToServicesForUser(true);
-        _dbService.setupNodeListening();
         _navigationService.replaceWithHomeView();
       } else if (user != null) {
         _firestoreService.listenToServicesForUser(false);

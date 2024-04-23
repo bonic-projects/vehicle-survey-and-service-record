@@ -1,3 +1,4 @@
+import 'package:autocare_flutter/services/firestore_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_firebase_auth/stacked_firebase_auth.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -17,6 +18,8 @@ class RegisterViewModel extends FormViewModel {
   final FirebaseAuthenticationService _firebaseAuthenticationService =
       locator<FirebaseAuthenticationService>();
   final _navigationService = locator<NavigationService>();
+  final _firestoreService = locator<FirestoreService>();
+
   final BottomSheetService _bottomSheetService = locator<BottomSheetService>();
 
   // late String _userRole;
@@ -67,8 +70,10 @@ class RegisterViewModel extends FormViewModel {
         if (error == null) {
           await _userService.fetchUser();
           if (userRoleValue! == 'user') {
+            _firestoreService.listenToServicesForUser(true);
             _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
           } else {
+            _firestoreService.listenToServicesForUser(false);
             _navigationService.pushNamedAndRemoveUntil(Routes.adminView);
           }
         } else {

@@ -14,7 +14,7 @@ class FirestoreService with ListenableServiceMixin {
   final _authenticationService = locator<FirebaseAuthenticationService>();
 
   final CollectionReference _usersCollection =
-  FirebaseFirestore.instance.collection("users");
+      FirebaseFirestore.instance.collection("users");
 
   Future<bool> createUser({required AppUser user, required keyword}) async {
     log.i('user:$user');
@@ -66,7 +66,7 @@ class FirestoreService with ListenableServiceMixin {
     log.i('Location update');
     try {
       final userDocument =
-      _usersCollection.doc(_authenticationService.currentUser!.uid);
+          _usersCollection.doc(_authenticationService.currentUser!.uid);
       await userDocument.update({
         "lat": lat,
         "long": long,
@@ -82,7 +82,7 @@ class FirestoreService with ListenableServiceMixin {
 
   //============================================================
   final CollectionReference _serviceCenterCollection =
-  FirebaseFirestore.instance.collection("service_centers");
+      FirebaseFirestore.instance.collection("service_centers");
 
   Stream<ServiceCenter?> getServiceCenterStream() {
     // Replace 'serviceCenters' with the actual name of your collection in Firestore
@@ -90,7 +90,7 @@ class FirestoreService with ListenableServiceMixin {
         .where('id', isEqualTo: _authenticationService.currentUser?.uid ?? "")
         .snapshots()
         .map(
-          (snapshot) {
+      (snapshot) {
         if (snapshot.docs.isNotEmpty) {
           // If there is a matching document, return the ServiceCenter
           return ServiceCenter.fromMap(
@@ -122,7 +122,7 @@ class FirestoreService with ListenableServiceMixin {
 
       return querySnapshot.docs
           .map((DocumentSnapshot document) =>
-          ServiceCenter.fromMap(document.data() as Map<String, dynamic>))
+              ServiceCenter.fromMap(document.data() as Map<String, dynamic>))
           .toList();
     } catch (e) {
       log.e('Error getting service centers: $e');
@@ -132,7 +132,7 @@ class FirestoreService with ListenableServiceMixin {
 
   //[===================================vehicle
   final CollectionReference _vehicleCollection =
-  FirebaseFirestore.instance.collection("vehicles");
+      FirebaseFirestore.instance.collection("vehicles");
 
   Future<String?> generateVehicleDocumentId() async {
     try {
@@ -236,7 +236,7 @@ class FirestoreService with ListenableServiceMixin {
 
       // Map the snapshots to a list of Vehicle objects
       Stream<List<Vehicle>> vehicleStream =
-      snapshots.map((QuerySnapshot snapshot) {
+          snapshots.map((QuerySnapshot snapshot) {
         return snapshot.docs.map((DocumentSnapshot document) {
           return Vehicle.fromMap(document.data() as Map<String, dynamic>);
         }).toList();
@@ -253,7 +253,7 @@ class FirestoreService with ListenableServiceMixin {
 
   //[===================================service
   final CollectionReference _serviceCollection =
-  FirebaseFirestore.instance.collection("services");
+      FirebaseFirestore.instance.collection("services");
 
   Future<String?> generateServiceDocumentId() async {
     try {
@@ -297,7 +297,7 @@ class FirestoreService with ListenableServiceMixin {
 
       // Map the snapshots to a list of VehicleService objects
       Stream<List<VehicleService>> serviceStream =
-      snapshots.map((QuerySnapshot snapshot) {
+          snapshots.map((QuerySnapshot snapshot) {
         return snapshot.docs.map((DocumentSnapshot document) {
           return VehicleService.fromMap(
               document.data() as Map<String, dynamic>);
@@ -319,7 +319,7 @@ class FirestoreService with ListenableServiceMixin {
 
   void listenToServicesForUser(bool isUser) {
     getServicesForUser(isUser).listen(
-          (List<VehicleService> services) {
+      (List<VehicleService> services) {
         log.e(services.length);
         _servicesList = services;
         notifyListeners();
@@ -344,7 +344,7 @@ class FirestoreService with ListenableServiceMixin {
         .where('id', isEqualTo: _serviceId)
         .snapshots()
         .map(
-          (snapshot) {
+      (snapshot) {
         if (snapshot.docs.isNotEmpty) {
           // If there is a matching document, return the ServiceCenter
           return VehicleService.fromMap(

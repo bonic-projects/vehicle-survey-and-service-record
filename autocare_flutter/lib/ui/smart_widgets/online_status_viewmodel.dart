@@ -22,14 +22,14 @@ class HomeViewModel extends BaseViewModel {
     if (time == null) return false;
     final DateTime now = DateTime.now();
     final difference = now.difference(time).inSeconds;
-    // log.i("Status ${difference.abs()}");
-    return difference.abs() <= 1;
+    log.i("Status ${difference.abs()}");
+    return difference.abs() <= 2;
   }
 
   late Timer timer;
 
   void setTimer() {
-    const oneSec = const Duration(seconds: 1);
+    const oneSec = Duration(seconds: 1);
     timer = Timer.periodic(
       oneSec,
       (Timer timer) {
