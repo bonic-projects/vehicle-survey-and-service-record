@@ -7,6 +7,7 @@ import 'package:autocare_flutter/models/service.dart';
 import 'package:autocare_flutter/services/database_service.dart';
 import 'package:autocare_flutter/services/user_service.dart';
 import 'package:autocare_flutter/ui/common/app_strings.dart';
+import 'package:autocare_flutter/ui/views/gyro/gyro_view.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -95,6 +96,10 @@ class HomeViewModel extends StreamViewModel<List<Vehicle>> {
     _firebaseService.setServiceId(service.id);
     _navigationService.navigateToAdminVehicleServiceView(
         service: service, isAdmin: false);
+  }
+
+  void gotoGyroView() {
+    _navigationService.navigateToGyroView();
   }
 
   @override

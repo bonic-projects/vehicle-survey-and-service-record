@@ -5,22 +5,23 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:autocare_flutter/models/service.dart' as _i11;
+import 'package:autocare_flutter/models/service.dart' as _i12;
 import 'package:autocare_flutter/ui/views/add_vehicle/add_vehicle_view.dart'
     as _i5;
 import 'package:autocare_flutter/ui/views/admin/admin_view.dart' as _i4;
 import 'package:autocare_flutter/ui/views/admin_vehicle_service/admin_vehicle_service_view.dart'
     as _i6;
+import 'package:autocare_flutter/ui/views/gyro/gyro_view.dart' as _i7;
 import 'package:autocare_flutter/ui/views/home/home_view.dart' as _i2;
-import 'package:autocare_flutter/ui/views/login/login_view.dart' as _i8;
+import 'package:autocare_flutter/ui/views/login/login_view.dart' as _i9;
 import 'package:autocare_flutter/ui/views/login_register/login_register_view.dart'
-    as _i7;
-import 'package:autocare_flutter/ui/views/register/register_view.dart' as _i9;
+    as _i8;
+import 'package:autocare_flutter/ui/views/register/register_view.dart' as _i10;
 import 'package:autocare_flutter/ui/views/startup/startup_view.dart' as _i3;
-import 'package:flutter/material.dart' as _i10;
+import 'package:flutter/material.dart' as _i11;
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i12;
+import 'package:stacked_services/stacked_services.dart' as _i13;
 
 class Routes {
   static const homeView = '/home-view';
@@ -32,6 +33,8 @@ class Routes {
   static const addVehicleView = '/add-vehicle-view';
 
   static const adminVehicleServiceView = '/admin-vehicle-service-view';
+
+  static const gyroView = '/gyro-view';
 
   static const loginRegisterView = '/login-register-view';
 
@@ -45,6 +48,7 @@ class Routes {
     adminView,
     addVehicleView,
     adminVehicleServiceView,
+    gyroView,
     loginRegisterView,
     loginView,
     registerView,
@@ -74,41 +78,45 @@ class StackedRouter extends _i1.RouterBase {
       page: _i6.AdminVehicleServiceView,
     ),
     _i1.RouteDef(
+      Routes.gyroView,
+      page: _i7.GyroView,
+    ),
+    _i1.RouteDef(
       Routes.loginRegisterView,
-      page: _i7.LoginRegisterView,
+      page: _i8.LoginRegisterView,
     ),
     _i1.RouteDef(
       Routes.loginView,
-      page: _i8.LoginView,
+      page: _i9.LoginView,
     ),
     _i1.RouteDef(
       Routes.registerView,
-      page: _i9.RegisterView,
+      page: _i10.RegisterView,
     ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.HomeView: (data) {
-      return _i10.MaterialPageRoute<dynamic>(
+      return _i11.MaterialPageRoute<dynamic>(
         builder: (context) => const _i2.HomeView(),
         settings: data,
       );
     },
     _i3.StartupView: (data) {
-      return _i10.MaterialPageRoute<dynamic>(
+      return _i11.MaterialPageRoute<dynamic>(
         builder: (context) => const _i3.StartupView(),
         settings: data,
       );
     },
     _i4.AdminView: (data) {
-      return _i10.MaterialPageRoute<dynamic>(
+      return _i11.MaterialPageRoute<dynamic>(
         builder: (context) => const _i4.AdminView(),
         settings: data,
       );
     },
     _i5.AddVehicleView: (data) {
       final args = data.getArgs<AddVehicleViewArguments>(nullOk: false);
-      return _i10.MaterialPageRoute<dynamic>(
+      return _i11.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i5.AddVehicleView(key: args.key, isCar: args.isCar),
         settings: data,
@@ -117,33 +125,39 @@ class StackedRouter extends _i1.RouterBase {
     _i6.AdminVehicleServiceView: (data) {
       final args =
           data.getArgs<AdminVehicleServiceViewArguments>(nullOk: false);
-      return _i10.MaterialPageRoute<dynamic>(
+      return _i11.MaterialPageRoute<dynamic>(
         builder: (context) => _i6.AdminVehicleServiceView(
             key: args.key, service: args.service, isAdmin: args.isAdmin),
         settings: data,
       );
     },
-    _i7.LoginRegisterView: (data) {
-      return _i10.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i7.LoginRegisterView(),
+    _i7.GyroView: (data) {
+      return _i11.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i7.GyroView(),
         settings: data,
       );
     },
-    _i8.LoginView: (data) {
+    _i8.LoginRegisterView: (data) {
+      return _i11.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i8.LoginRegisterView(),
+        settings: data,
+      );
+    },
+    _i9.LoginView: (data) {
       final args = data.getArgs<LoginViewArguments>(
         orElse: () => const LoginViewArguments(),
       );
-      return _i10.MaterialPageRoute<dynamic>(
-        builder: (context) => _i8.LoginView(key: args.key),
+      return _i11.MaterialPageRoute<dynamic>(
+        builder: (context) => _i9.LoginView(key: args.key),
         settings: data,
       );
     },
-    _i9.RegisterView: (data) {
+    _i10.RegisterView: (data) {
       final args = data.getArgs<RegisterViewArguments>(
         orElse: () => const RegisterViewArguments(),
       );
-      return _i10.MaterialPageRoute<dynamic>(
-        builder: (context) => _i9.RegisterView(key: args.key),
+      return _i11.MaterialPageRoute<dynamic>(
+        builder: (context) => _i10.RegisterView(key: args.key),
         settings: data,
       );
     },
@@ -162,7 +176,7 @@ class AddVehicleViewArguments {
     required this.isCar,
   });
 
-  final _i10.Key? key;
+  final _i11.Key? key;
 
   final bool isCar;
 
@@ -190,9 +204,9 @@ class AdminVehicleServiceViewArguments {
     required this.isAdmin,
   });
 
-  final _i10.Key? key;
+  final _i11.Key? key;
 
-  final _i11.VehicleService service;
+  final _i12.VehicleService service;
 
   final bool isAdmin;
 
@@ -218,7 +232,7 @@ class AdminVehicleServiceViewArguments {
 class LoginViewArguments {
   const LoginViewArguments({this.key});
 
-  final _i10.Key? key;
+  final _i11.Key? key;
 
   @override
   String toString() {
@@ -240,7 +254,7 @@ class LoginViewArguments {
 class RegisterViewArguments {
   const RegisterViewArguments({this.key});
 
-  final _i10.Key? key;
+  final _i11.Key? key;
 
   @override
   String toString() {
@@ -259,7 +273,7 @@ class RegisterViewArguments {
   }
 }
 
-extension NavigatorStateExtension on _i12.NavigationService {
+extension NavigatorStateExtension on _i13.NavigationService {
   Future<dynamic> navigateToHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -303,7 +317,7 @@ extension NavigatorStateExtension on _i12.NavigationService {
   }
 
   Future<dynamic> navigateToAddVehicleView({
-    _i10.Key? key,
+    _i11.Key? key,
     required bool isCar,
     int? routerId,
     bool preventDuplicates = true,
@@ -320,8 +334,8 @@ extension NavigatorStateExtension on _i12.NavigationService {
   }
 
   Future<dynamic> navigateToAdminVehicleServiceView({
-    _i10.Key? key,
-    required _i11.VehicleService service,
+    _i11.Key? key,
+    required _i12.VehicleService service,
     required bool isAdmin,
     int? routerId,
     bool preventDuplicates = true,
@@ -332,6 +346,20 @@ extension NavigatorStateExtension on _i12.NavigationService {
     return navigateTo<dynamic>(Routes.adminVehicleServiceView,
         arguments: AdminVehicleServiceViewArguments(
             key: key, service: service, isAdmin: isAdmin),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToGyroView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.gyroView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -353,7 +381,7 @@ extension NavigatorStateExtension on _i12.NavigationService {
   }
 
   Future<dynamic> navigateToLoginView({
-    _i10.Key? key,
+    _i11.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -369,7 +397,7 @@ extension NavigatorStateExtension on _i12.NavigationService {
   }
 
   Future<dynamic> navigateToRegisterView({
-    _i10.Key? key,
+    _i11.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -427,7 +455,7 @@ extension NavigatorStateExtension on _i12.NavigationService {
   }
 
   Future<dynamic> replaceWithAddVehicleView({
-    _i10.Key? key,
+    _i11.Key? key,
     required bool isCar,
     int? routerId,
     bool preventDuplicates = true,
@@ -444,8 +472,8 @@ extension NavigatorStateExtension on _i12.NavigationService {
   }
 
   Future<dynamic> replaceWithAdminVehicleServiceView({
-    _i10.Key? key,
-    required _i11.VehicleService service,
+    _i11.Key? key,
+    required _i12.VehicleService service,
     required bool isAdmin,
     int? routerId,
     bool preventDuplicates = true,
@@ -456,6 +484,20 @@ extension NavigatorStateExtension on _i12.NavigationService {
     return replaceWith<dynamic>(Routes.adminVehicleServiceView,
         arguments: AdminVehicleServiceViewArguments(
             key: key, service: service, isAdmin: isAdmin),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithGyroView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.gyroView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -477,7 +519,7 @@ extension NavigatorStateExtension on _i12.NavigationService {
   }
 
   Future<dynamic> replaceWithLoginView({
-    _i10.Key? key,
+    _i11.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -493,7 +535,7 @@ extension NavigatorStateExtension on _i12.NavigationService {
   }
 
   Future<dynamic> replaceWithRegisterView({
-    _i10.Key? key,
+    _i11.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,

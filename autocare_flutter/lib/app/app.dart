@@ -15,6 +15,8 @@ import 'package:autocare_flutter/ui/views/admin/admin_view.dart';
 import 'package:autocare_flutter/ui/views/add_vehicle/add_vehicle_view.dart';
 import 'package:autocare_flutter/services/database_service.dart';
 import 'package:autocare_flutter/ui/views/admin_vehicle_service/admin_vehicle_service_view.dart';
+
+import 'package:autocare_flutter/ui/views/gyro/gyro_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -24,6 +26,8 @@ import 'package:autocare_flutter/ui/views/admin_vehicle_service/admin_vehicle_se
     MaterialRoute(page: AdminView),
     MaterialRoute(page: AddVehicleView),
     MaterialRoute(page: AdminVehicleServiceView),
+
+    MaterialRoute(page: GyroView),
 // @stacked-route
     MaterialRoute(page: LoginRegisterView),
     MaterialRoute(page: LoginView),

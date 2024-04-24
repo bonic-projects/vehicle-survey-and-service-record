@@ -370,6 +370,12 @@ class VehicleCard extends StatelessWidget {
                             ),
                           ),
                         ),
+                      ElevatedButton.icon(
+                          onPressed: () {
+                            model.gotoGyroView();
+                          },
+                          icon: const Icon(Icons.speed_sharp),
+                          label: const Text('View  Complete Reading'))
                     ],
                   ),
 
